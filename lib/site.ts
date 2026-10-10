@@ -5,7 +5,7 @@ export const site = {
   tagline: "Your Australian money, ready before you land.",
   description:
     "An AUD account with its own BSB, a card for your phone and 30+ currencies in one app. Made for international students, new arrivals and SMSF trustees.",
-  email: "hello@extensia.com.au",
+  email: "support@extensia.com.au",
 };
 
 export const nav = [

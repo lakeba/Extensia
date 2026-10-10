@@ -48,7 +48,7 @@ CI (`.github/workflows/ci.yml`) runs typecheck + build on every push to `main` a
 
 ## Placeholders still on the site
 
-Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, the ~700,000 students figure and `hello@extensia.com.au` are illustrative. Replace them with confirmed figures before launch.
+Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, the ~700,000 students figure and `support@extensia.com.au` are illustrative. Replace them with confirmed figures before launch.
 
 ## Open to-dos (as of 2026-10-11)
 
