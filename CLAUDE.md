@@ -43,7 +43,8 @@ CI (`.github/workflows/ci.yml`) runs typecheck + build on every push to `main` a
 - Make changes on a branch and open a pull request. Don't push straight to `main` unless asked.
 - Run `npm run typecheck && npm run build` before pushing.
 - Copy style: plain, direct sentences, Australian English (organise, enrol, colour), AUD shown as `A$`.
-- Deployment target: Vercel (Sydney region), not yet connected.
+- Deployment: Vercel, connected to this repo. Every PR gets a preview deployment; merges to `main` deploy to production.
+- `@claude` mentions in issues and PRs run `.github/workflows/claude.yml` (owners, members and collaborators only). Requires the `ANTHROPIC_API_KEY` repo secret, which is set.
 
 ## Placeholders still on the site
 
@@ -52,7 +53,9 @@ Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, th
 ## Open to-dos (as of 2026-10-11)
 
 - [ ] Decide public vs private repo (currently public)
-- [ ] Connect Vercel and set env vars
+- [x] Connect Vercel to the repo
+- [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel (not yet confirmed)
+- [x] Claude GitHub Action for `@claude` mentions (PR #1)
 - [ ] Choose and set the waitlist destination (`WAITLIST_WEBHOOK_URL`)
 - [ ] Add privacy policy and terms pages before collecting sign-ups
 - [ ] Legal review of footer disclaimers and Banking Circle name usage
