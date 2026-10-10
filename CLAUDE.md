@@ -57,7 +57,7 @@ Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, th
 - [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel (not yet confirmed)
 - [x] Claude GitHub Action for `@claude` mentions (PR #1)
 - [x] Choose the waitlist destination (Supabase via the Vercel integration)
-- [ ] Run the waitlist migration in Supabase and confirm the project region on `/privacy`
+- [x] Run the waitlist migration in Supabase (project region: Sydney)
 - [x] Draft privacy page (`/privacy`, pending legal review)
 - [ ] Terms page
 - [ ] Legal review of footer disclaimers and Banking Circle name usage
