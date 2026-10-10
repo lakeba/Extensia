@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { EMAIL_RE, type Who, arrivals, countries } from "@/lib/waitlist";
 
@@ -102,7 +103,7 @@ export function WaitlistForm({ initialWho = "student" }: { initialWho?: Who }) {
         <button className="btn btn-accent" type="submit" disabled={sending} style={{ justifyContent: "center" }}>
           {sending ? "Joining…" : "Join the waitlist"}
         </button>
-        <p className="note">We&apos;ll only use your details to contact you about Extensia. You can unsubscribe at any time.</p>
+        <p className="note">We&apos;ll only use your details to contact you about Extensia. You can unsubscribe at any time. Read our <Link href="/privacy">draft privacy policy</Link>.</p>
       </form>
     </div>
   );

@@ -418,3 +418,6 @@ fieldset.plain{border:0;padding:0;margin:0;display:grid;gap:8px}
 .btn[disabled]{opacity:.6;cursor:progress;transform:none}
 .form-error{font-size:14px;color:var(--coral)}
 .nf{display:grid;gap:22px;justify-items:start;padding-block:clamp(80px,12vw,160px)}
+.prose{display:grid;gap:14px;max-width:68ch;margin-top:32px}
+.prose h2{margin-top:16px}
+.prose ul{padding-left:1.25em;display:grid;gap:6px}
