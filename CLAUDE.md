@@ -23,8 +23,8 @@ Marketing website and waitlist for **Extensia**, a planned Australian fintech mo
 - Fonts via `next/font/google`: Bricolage Grotesque (display), Instrument Sans (body), JetBrains Mono (numbers).
 - Pages: `app/{page,students,arrivals,smsf,pricing,company,help,join}`. Interactive parts are client components in `components/`.
 - Editable content lives in `lib/`: `plans.ts` (pricing + comparison table), `faq.ts`, `rates.ts` (calculator rates and fee rules), `site.ts` (name, URL, nav), `waitlist.ts`.
-- Waitlist: `POST /api/waitlist` validates, drops honeypot hits and forwards JSON to `WAITLIST_WEBHOOK_URL`. Without it, sign-ups are **not stored**.
-- Env vars: `NEXT_PUBLIC_SITE_URL`, `WAITLIST_WEBHOOK_URL` (see `.env.example`).
+- Waitlist: `POST /api/waitlist` validates, drops honeypot hits and inserts into the Supabase `waitlist` table (schema in `supabase/migrations/`). Duplicate emails are ignored. Without the Supabase env vars, sign-ups are **not stored**.
+- Env vars: `NEXT_PUBLIC_SITE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (server-only; set by the Vercel Supabase integration, see `.env.example`).
 
 ## Commands
 
@@ -56,8 +56,10 @@ Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, th
 - [x] Connect Vercel to the repo
 - [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel (not yet confirmed)
 - [x] Claude GitHub Action for `@claude` mentions (PR #1)
-- [ ] Choose and set the waitlist destination (`WAITLIST_WEBHOOK_URL`)
-- [ ] Add privacy policy and terms pages before collecting sign-ups
+- [x] Choose the waitlist destination (Supabase via the Vercel integration)
+- [ ] Run the waitlist migration in Supabase and confirm the project region on `/privacy`
+- [x] Draft privacy page (`/privacy`, pending legal review)
+- [ ] Terms page
 - [ ] Legal review of footer disclaimers and Banking Circle name usage
 - [ ] Replace placeholder pricing, rates and dates
 - [ ] Branch protection on `main` requiring CI

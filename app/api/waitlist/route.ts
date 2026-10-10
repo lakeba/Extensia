@@ -34,22 +34,39 @@ export async function POST(req: Request) {
         }),
   };
 
-  const hook = process.env.WAITLIST_WEBHOOK_URL;
-  if (!hook) {
-    console.info("[waitlist] WAITLIST_WEBHOOK_URL not set; sign-up not stored", { who: entry.who });
+  // Set by the Vercel Supabase integration. The key is server-only; never expose it to the browser.
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SECRET_KEY;
+  if (!url || !key) {
+    console.info("[waitlist] Supabase not configured; sign-up not stored", { who: entry.who });
     return NextResponse.json({ ok: true, stored: false });
   }
 
   try {
-    const res = await fetch(hook, {
+    // Duplicate emails are ignored, so signing up twice still shows success.
+    const res = await fetch(`${url}/rest/v1/waitlist?on_conflict=email`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...entry, source: "extensia-website", createdAt: new Date().toISOString() }),
+      headers: {
+        "Content-Type": "application/json",
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Prefer: "resolution=ignore-duplicates,return=minimal",
+      },
+      body: JSON.stringify({
+        who: entry.who,
+        email: entry.email,
+        first_name: entry.firstName,
+        last_name: entry.lastName,
+        moving_from: entry.movingFrom ?? null,
+        arriving: entry.arriving ?? null,
+        fund_name: entry.fundName || null,
+        source: "extensia-website",
+      }),
       signal: AbortSignal.timeout(8000),
     });
-    if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
+    if (!res.ok) throw new Error(`Supabase responded ${res.status}: ${await res.text()}`);
   } catch (err) {
-    console.error("[waitlist] forwarding failed", err);
+    console.error("[waitlist] insert failed", err);
     return NextResponse.json({ error: "We couldn't add you to the list. Please try again in a minute." }, { status: 502 });
   }
 

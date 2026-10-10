@@ -33,7 +33,7 @@ export default function Privacy() {
           <p>To email you when your invite is ready, to prioritise invites (for example by arrival date), and to understand which groups want Extensia. We only use your details to contact you about Extensia.</p>
 
           <h2 className="t-3">Where it&apos;s sent</h2>
-          <p>The form sends your details to our server, which forwards them to a webhook that delivers them to the tool we use to manage the waitlist. That destination is still being chosen. We&apos;ll name it here once confirmed. Until a destination is set, sign-ups are not stored. We don&apos;t sell your details.</p>
+          <p>The form sends your details to our server, which stores them in a database run by Supabase, our database provider. [Placeholder] The database is hosted in the provider&apos;s [region to be confirmed] region. Only our team can access it. We don&apos;t sell your details.</p>
 
           <h2 className="t-3">How long we keep it</h2>
           <p>[Placeholder] We plan to keep waitlist details until you&apos;re invited to open an account, you ask us to delete them, or 24 months after you join, whichever comes first.</p>
