@@ -1,6 +1,6 @@
 name: Claude Code
 
-# Mention @claude in an issue, issue comment, PR comment or PR review to have
+# Mention @lakeba-ai in an issue, issue comment, PR comment or PR review to have
 # Claude work on it. Only repository owners, org members and collaborators can
 # trigger it, because the repository is public.
 
@@ -18,13 +18,13 @@ jobs:
   claude:
     if: |
       (
-        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@lakeba-ai') &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
-        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') &&
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@lakeba-ai') &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
-        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') &&
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@lakeba-ai') &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association)) ||
-        (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
+        (github.event_name == 'issues' && (contains(github.event.issue.body, '@lakeba-ai') || contains(github.event.issue.title, '@lakeba-ai')) &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
       )
     runs-on: ubuntu-latest
@@ -44,6 +44,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          trigger_phrase: "@lakeba-ai"
           claude_args: |
             --max-turns 30
             --allowedTools "Bash(npm ci),Bash(npm install),Bash(npm run typecheck),Bash(npm run build)"

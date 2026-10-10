@@ -44,7 +44,7 @@ CI (`.github/workflows/ci.yml`) runs typecheck + build on every push to `main` a
 - Run `npm run typecheck && npm run build` before pushing.
 - Copy style: plain, direct sentences, Australian English (organise, enrol, colour), AUD shown as `A$`.
 - Deployment: Vercel, connected to this repo. Every PR gets a preview deployment; merges to `main` deploy to production.
-- `@claude` mentions in issues and PRs run `.github/workflows/claude.yml` (owners, members and collaborators only). Authenticates with the `CLAUDE_CODE_OAUTH_TOKEN` repo secret (a Claude subscription token from `claude setup-token`).
+- `@lakeba-ai` mentions in issues and PRs run `.github/workflows/claude.yml` (owners, members and collaborators only). Authenticates with the `CLAUDE_CODE_OAUTH_TOKEN` repo secret (a Claude subscription token from `claude setup-token`).
 
 ## Placeholders still on the site
 
