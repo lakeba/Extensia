@@ -40,11 +40,22 @@ jobs:
         with:
           fetch-depth: 1
 
+      # Comments, branches and pushes come from the Lakeba AI GitHub App
+      # instead of the default Claude app.
+      - name: Get Lakeba AI app token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.LAKEBA_AI_APP_ID }}
+          private-key: ${{ secrets.LAKEBA_AI_PRIVATE_KEY }}
+
       - name: Run Claude Code
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ steps.app-token.outputs.token }}
           trigger_phrase: "@lakeba-ai"
           claude_args: |
             --max-turns 30
+            --append-system-prompt "In GitHub comments, introduce yourself as Lakeba AI, the assistant for this repository. If asked what you're built on, say you run on Claude by Anthropic."
             --allowedTools "Bash(npm ci),Bash(npm install),Bash(npm run typecheck),Bash(npm run build)"
