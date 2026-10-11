@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Crumb, Feature, Step, VisaChips } from "@/components/Bits";
+import { PartnerPanel } from "@/components/PartnerCard";
 
 export const metadata: Metadata = {
   title: "SMSF accounts",
@@ -67,6 +68,8 @@ export default function Smsf() {
           <p className="note mt-m">Extensia provides a transaction account. We do not provide financial advice about your SMSF. Speak to a licensed adviser about your fund&apos;s investment strategy and obligations.</p>
         </div>
       </section>
+
+      <PartnerPanel id="assetora" />
     </>
   );
 }

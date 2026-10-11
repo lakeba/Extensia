@@ -35,6 +35,9 @@ export default function Privacy() {
           <h2 className="t-3">Where it&apos;s sent</h2>
           <p>The form sends your details to our server, which stores them in a database run by Supabase, our database provider. The database is hosted in Sydney, Australia. Only our team can access it. We don&apos;t sell your details.</p>
 
+          <h2 className="t-3">Partnership enquiries</h2>
+          <p>If you use the form on our <Link href="/partners">partners page</Link>, we collect your name, organisation, work email, type of organisation and your message. We use them only to reply to your enquiry. They&apos;re stored in the same Sydney-hosted database as waitlist details.</p>
+
           <h2 className="t-3">How long we keep it</h2>
           <p>[Placeholder] We plan to keep waitlist details until you&apos;re invited to open an account, you ask us to delete them, or 24 months after you join, whichever comes first.</p>
 

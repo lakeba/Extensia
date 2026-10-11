@@ -79,13 +79,13 @@ p{margin:0}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 23px/1 var(--display);letter-spacing:-.04em}
 .logo svg{width:30px;height:30px;flex:none}
 .nav-links{display:flex;gap:4px;flex:1}
-.nav-links a{text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:999px;color:var(--muted)}
+.nav-links a{text-decoration:none;font-weight:500;font-size:15px;padding:8px 12px;border-radius:999px;color:var(--muted);white-space:nowrap}
 .nav-links a:hover,.nav-links a[aria-current="page"]{color:var(--fg);background:var(--surface-2)}
 .nav-cta{display:flex;gap:8px;align-items:center}
 .menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--surface-2);color:var(--fg);cursor:pointer;align-items:center;justify-content:center}
 .menu-btn svg{width:20px;height:20px}
 .mobile-menu{display:none}
-@media (max-width:980px){
+@media (max-width:1100px){
   .nav-links,.nav-cta .btn-ghost{display:none}
   .menu-btn{display:inline-flex}
   .nav-in{justify-content:space-between}
@@ -421,3 +421,20 @@ fieldset.plain{border:0;padding:0;margin:0;display:grid;gap:8px}
 .prose{display:grid;gap:14px;max-width:68ch;margin-top:32px}
 .prose h2{margin-top:16px}
 .prose ul{padding-left:1.25em;display:grid;gap:6px}
+
+/* partners */
+.partners{display:grid;gap:20px;margin-top:40px}
+.partner{background:var(--surface);color:var(--fg);border-radius:var(--r-lg);padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:clamp(20px,4vw,48px);align-items:start}
+.partner > *{min-width:0}
+.partner-logo{border-radius:var(--r);display:grid;place-items:center;padding:clamp(24px,4vw,40px);aspect-ratio:16/10}
+.partner-logo img{width:100%;max-width:220px;height:auto}
+.partner-body{display:grid;gap:14px;align-content:start}
+.partner-body > p:not(.note){color:var(--muted)}
+.partner-body .ticks{margin-top:0}
+.partner-fit{background:var(--surface-2);border-radius:var(--r-sm);padding:14px 16px;color:var(--fg)!important}
+.partner-panel .partner-logo{aspect-ratio:auto;min-height:150px}
+.partner-panel .hero-actions{margin-top:4px}
+@media (max-width:760px){.partner{grid-template-columns:1fr}}
+.ink .form{color:var(--fg)}
+.field textarea{font:500 16px var(--body);padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);width:100%;resize:vertical}
+.field textarea:focus{outline:none;border-color:var(--accent)}

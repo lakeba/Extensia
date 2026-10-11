@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Balance, Phone, Tx } from "@/components/Phone";
 import { HoursTracker } from "@/components/HoursTracker";
 import { Crumb, CtaBand, Feature, Ticks, VisaChips } from "@/components/Bits";
+import { PartnerPanel } from "@/components/PartnerCard";
 
 export const metadata: Metadata = {
   title: "International students",
@@ -76,6 +77,8 @@ export default function Students() {
           />
         </div>
       </section>
+
+      <PartnerPanel id="mist" />
     </>
   );
 }

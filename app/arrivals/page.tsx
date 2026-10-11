@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Balance, Float, Phone, Tx } from "@/components/Phone";
 import { SettleChecklist } from "@/components/SettleChecklist";
 import { Crumb, VisaChips } from "@/components/Bits";
+import { PartnerPanel } from "@/components/PartnerCard";
 
 export const metadata: Metadata = {
   title: "New arrivals and migrants",
@@ -86,6 +87,8 @@ export default function Arrivals() {
           <div className="mt-m"><Link className="btn btn-light" href="/#converter">Open the calculator</Link></div>
         </div>
       </section>
+
+      <PartnerPanel id="mist" />
     </>
   );
 }

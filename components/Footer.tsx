@@ -30,6 +30,7 @@ export function Footer() {
             <ul>
               <li><Link href="/company">About</Link></li>
               <li><Link href="/company#roadmap">Roadmap</Link></li>
+              <li><Link href="/partners">Partners</Link></li>
               <li><Link href="/join">Waitlist</Link></li>
               <li><Link href="/privacy">Privacy (draft)</Link></li>
             </ul>

@@ -13,6 +13,7 @@ export const nav = [
   { href: "/arrivals", label: "New arrivals" },
   { href: "/smsf", label: "SMSF" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/partners", label: "Partners" },
   { href: "/company", label: "Company" },
   { href: "/help", label: "Help" },
 ];
