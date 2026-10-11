@@ -21,9 +21,10 @@ Marketing website and waitlist for **Extensia**, a planned Australian fintech mo
 
 - Next.js 16 (App Router), React 19, TypeScript, plain CSS in `app/globals.css` (design tokens on `:root`, light and dark themes). No UI framework.
 - Fonts via `next/font/google`: Bricolage Grotesque (display), Instrument Sans (body), JetBrains Mono (numbers).
-- Pages: `app/{page,students,arrivals,smsf,pricing,company,help,join}`. Interactive parts are client components in `components/`.
-- Editable content lives in `lib/`: `plans.ts` (pricing + comparison table), `faq.ts`, `rates.ts` (calculator rates and fee rules), `site.ts` (name, URL, nav), `waitlist.ts`.
+- Pages: `app/{page,students,arrivals,smsf,pricing,company,help,join,partners,privacy}`. Interactive parts are client components in `components/`.
+- Editable content lives in `lib/`: `plans.ts` (pricing + comparison table), `faq.ts`, `rates.ts` (calculator rates and fee rules), `site.ts` (name, URL, nav), `waitlist.ts`, `partners.ts` (partner cards; logos in `public/partners/`).
 - Waitlist: `POST /api/waitlist` validates, drops honeypot hits and inserts into the Supabase `waitlist` table (schema in `supabase/migrations/`). Duplicate emails are ignored. Without the Supabase env vars, sign-ups are **not stored**.
+- Partners: `/partners` lists partners (Mist for students and migrants, Assetora for SMSF trustees) with short panels on the audience pages. Partner copy stays factual: no returns, rates or recommendations, since Extensia holds no AFSL. The "become a partner" form posts to `POST /api/partners`, which inserts into the Supabase `partner_enquiries` table.
 - Env vars: `NEXT_PUBLIC_SITE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (server-only; set by the Vercel Supabase integration, see `.env.example`).
 
 ## Commands

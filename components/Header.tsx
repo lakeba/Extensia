@@ -15,7 +15,7 @@ export function Header() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
-    const onResize = () => window.innerWidth > 980 && setOpen(false);
+    const onResize = () => window.innerWidth > 1100 && setOpen(false);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
