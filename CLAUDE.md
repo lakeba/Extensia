@@ -52,7 +52,7 @@ Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, th
 
 ## Open to-dos (as of 2026-10-11)
 
-- [ ] Decide public vs private repo (currently public)
+- [x] Make the repo private (2026-10-11)
 - [x] Connect Vercel to the repo
 - [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel (not yet confirmed)
 - [x] Claude GitHub Action for `@claude` mentions (PR #1)
@@ -62,5 +62,5 @@ Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, th
 - [ ] Terms page
 - [ ] Legal review of footer disclaimers and Banking Circle name usage
 - [ ] Replace placeholder pricing, rates and dates
-- [ ] Branch protection on `main` requiring CI
+- [ ] Branch protection on `main` requiring CI (private repos need GitHub Pro or higher for this)
 - [ ] Move plans from OneNote into `docs/` and tasks into GitHub Issues / Projects
