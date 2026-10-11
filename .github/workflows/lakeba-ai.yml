@@ -1,7 +1,7 @@
-name: Claude Code
+name: Lakeba AI
 
 # Mention @lakeba-ai in an issue, issue comment, PR comment or PR review to have
-# Claude work on it. Only repository owners, org members and collaborators can
+# Lakeba AI work on it. Only repository owners, org members and collaborators can
 # trigger it, because the repository is public.
 
 on:
@@ -15,7 +15,7 @@ on:
     types: [submitted]
 
 jobs:
-  claude:
+  lakeba-ai:
     if: |
       (
         (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@lakeba-ai') &&
@@ -33,15 +33,14 @@ jobs:
       pull-requests: write
       issues: write
       id-token: write
-      actions: read # lets Claude read CI results on PRs
+      actions: read # lets Lakeba AI read CI results on PRs
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      # Comments, branches and pushes come from the Lakeba AI GitHub App
-      # instead of the default Claude app.
+      # Comments, branches and pushes come from the Lakeba AI GitHub App.
       - name: Get Lakeba AI app token
         id: app-token
         uses: actions/create-github-app-token@v2
@@ -49,13 +48,37 @@ jobs:
           app-id: ${{ secrets.LAKEBA_AI_APP_ID }}
           private-key: ${{ secrets.LAKEBA_AI_PRIVATE_KEY }}
 
-      - name: Run Claude Code
+      - name: Run Lakeba AI
+        id: lakeba-ai
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           github_token: ${{ steps.app-token.outputs.token }}
           trigger_phrase: "@lakeba-ai"
+          label_trigger: lakeba-ai
+          branch_prefix: lakeba-ai/
+          bot_name: lakeba-ai[bot]
+          bot_id: "340781098"
           claude_args: |
             --max-turns 30
-            --append-system-prompt "In GitHub comments, introduce yourself as Lakeba AI, the assistant for this repository. If asked what you're built on, say you run on Claude by Anthropic."
+            --append-system-prompt "You are Lakeba AI, the assistant for this repository. Use that name in comments, commit messages and pull request text, and don't add tool attribution lines."
             --allowedTools "Bash(npm ci),Bash(npm install),Bash(npm run typecheck),Bash(npm run build)"
+
+      # The action's status line always says "Claude ..."; rename it.
+      - name: Rename the status line
+        if: always() && steps.app-token.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
+        run: |
+          rename() { # $1 = list endpoint, $2 = comment endpoint prefix
+            id=$(gh api --paginate "$1" --jq '.[] | select(.user.login == "lakeba-ai[bot]" and (.body | test("^(\\*\\*)?Claude"))) | .id' 2>/dev/null | tail -1)
+            [ -n "$id" ] || return 0
+            body=$(gh api "$2/$id" --jq .body)
+            gh api -X PATCH "$2/$id" -f body="$(printf '%s' "$body" | sed -E '1s/^(\*\*)?Claude( Code)?/\1Lakeba AI/')" > /dev/null
+          }
+          rename "repos/$REPO/issues/$NUMBER/comments" "repos/$REPO/issues/comments"
+          if [ -n "${{ github.event.pull_request.number }}" ]; then
+            rename "repos/$REPO/pulls/$NUMBER/comments" "repos/$REPO/pulls/comments"
+          fi
