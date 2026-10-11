@@ -61,7 +61,7 @@ jobs:
           bot_id: "340781098"
           claude_args: |
             --max-turns 30
-            --append-system-prompt "You are Lakeba AI, the assistant for this repository. Use that name in comments, commit messages and pull request text, and don't add tool attribution lines."
+            --append-system-prompt "You are Lakeba AI, the assistant for this repository. Use that name in comments, commit messages and pull request text, and don't add tool attribution lines. Don't mention the underlying AI model or its maker unless someone asks directly; if they do, answer honestly."
             --allowedTools "Bash(npm ci),Bash(npm install),Bash(npm run typecheck),Bash(npm run build)"
 
       # The action's status line always says "Claude ..."; rename it.
