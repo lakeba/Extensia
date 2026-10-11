@@ -20,7 +20,7 @@ Marketing website and waitlist for **Extensia**, a planned Australian fintech mo
 ## Tech
 
 - Next.js 16 (App Router), React 19, TypeScript, plain CSS in `app/globals.css` (design tokens on `:root`, light and dark themes). No UI framework.
-- Fonts via `next/font/google`: Bricolage Grotesque (display), Instrument Sans (body), JetBrains Mono (numbers).
+- Fonts via `next/font/google`: Geist (display and body), Geist Mono (numbers). Look: white ground, black pill buttons, full-bleed colour panels on the home page (`.r-*` classes in `globals.css`).
 - Pages: `app/{page,students,arrivals,smsf,pricing,company,help,join,partners,privacy}`. Interactive parts are client components in `components/`.
 - Editable content lives in `lib/`: `plans.ts` (pricing + comparison table), `faq.ts`, `rates.ts` (calculator rates and fee rules), `site.ts` (name, URL, nav), `waitlist.ts`, `partners.ts` (partner cards; logos in `public/partners/`).
 - Waitlist: `POST /api/waitlist` validates, drops honeypot hits and inserts into the Supabase `waitlist` table (schema in `supabase/migrations/`). Duplicate emails are ignored. Without the Supabase env vars, sign-ups are **not stored**.
