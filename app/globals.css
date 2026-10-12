@@ -86,7 +86,7 @@ p{margin:0}
 .menu-btn svg{width:20px;height:20px}
 .mobile-menu{display:none}
 @media (max-width:1100px){
-  .nav-links,.nav-cta .btn-ghost{display:none}
+  .nav-links{display:none}
   .menu-btn{display:inline-flex}
   .nav-in{justify-content:space-between}
   .mobile-menu{display:block;border-top:1px solid var(--line);background:var(--bg)}
