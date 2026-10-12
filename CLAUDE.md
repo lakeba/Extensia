@@ -23,7 +23,7 @@ Marketing website and waitlist for **Extensia**, a planned Australian fintech mo
 - Fonts via `next/font/google`: Geist (display and body), Geist Mono (numbers). Look: white ground, black pill buttons, full-bleed colour panels on the home page (`.r-*` classes in `globals.css`).
 - Pages: `app/{page,students,arrivals,smsf,pricing,company,help,join,partners,privacy}`. Interactive parts are client components in `components/`.
 - Editable content lives in `lib/`: `plans.ts` (pricing + comparison table), `faq.ts`, `rates.ts` (calculator rates and fee rules), `site.ts` (name, URL, nav), `waitlist.ts`, `partners.ts` (partner cards; logos in `public/partners/`).
-- Waitlist: `POST /api/waitlist` validates, drops honeypot hits and inserts into the Supabase `waitlist` table (schema in `supabase/migrations/`). Duplicate emails are ignored. Without the Supabase env vars, sign-ups are **not stored**.
+- Waitlist: `POST /api/waitlist` validates, drops honeypot hits and inserts into the Supabase `waitlist` table (schema in `supabase/migrations/`). Duplicate emails are ignored. Without the Supabase env vars, sign-ups are **not stored**. A Supabase database webhook (configured in the Supabase dashboard, not in this repo) fires on each `INSERT` into `waitlist` and POSTs the new row (`{ type, table, schema, record, old_record }`) to a Power Automate flow. The flow's URL contains a signature: keep it out of the repo. Sign-ups that aren't stored (duplicates, or no Supabase env vars) don't trigger it.
 - Partners: `/partners` lists partners (Mist for students and migrants, Assetora for SMSF trustees) with short panels on the audience pages. Partner copy stays factual: no returns, rates or recommendations, since Extensia holds no AFSL. The "become a partner" form posts to `POST /api/partners`, which inserts into the Supabase `partner_enquiries` table.
 - Env vars: `NEXT_PUBLIC_SITE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (server-only; set by the Vercel Supabase integration, see `.env.example`).
 
@@ -40,7 +40,7 @@ CI (`.github/workflows/ci.yml`) runs typecheck + build on every push to `main` a
 
 ## Working conventions
 
-- Repo: https://github.com/lakeba/extensia, default branch `main`.
+- Repo: https://github.com/lakeba/Extensia, default branch `main`.
 - Make changes on a branch and open a pull request. Don't push straight to `main` unless asked.
 - Run `npm run typecheck && npm run build` before pushing.
 - Copy style: plain, direct sentences, Australian English (organise, enrol, colour), AUD shown as `A$`.
