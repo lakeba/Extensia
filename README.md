@@ -25,7 +25,7 @@ Requires Node.js 20.9 or later.
 | `/help`      | `app/help/page.tsx`        |
 | `/join`      | `app/join/page.tsx` (`?as=student|arrival|smsf` preselects the form) |
 | `/partners`  | `app/partners/page.tsx`    |
-| `/privacy`   | `app/privacy/page.tsx` (draft, pending legal review) |
+| `/privacy`   | `app/privacy/page.tsx` (draft) |
 
 Content that changes often lives in `lib/`: plans and the comparison table (`plans.ts`), FAQ (`faq.ts`), calculator rates and fee rules (`rates.ts`), site name, URL and nav (`site.ts`), waitlist form options (`waitlist.ts`), partner cards (`partners.ts`, logos in `public/partners/`).
 
@@ -60,6 +60,5 @@ npm start          # serves on port 3000; set PORT to change it
 ## Before going live
 
 - Replace illustrative figures: plan prices, fees, calculator rates (`lib/rates.ts`), roadmap dates and the contact email.
-- Have legal review the footer disclaimers (`components/Footer.tsx`) and the use of the Banking Circle name.
 - Don't describe Extensia as a "bank", "banker" or "banking" service anywhere: section 66 of the Banking Act 1959 restricts those words to authorised institutions.
-- Finish legal review of the draft privacy policy (`/privacy`) and add a terms page.
+- Add a terms page.
