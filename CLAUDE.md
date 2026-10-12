@@ -51,17 +51,15 @@ CI (`.github/workflows/ci.yml`) runs typecheck + build on every push to `main` a
 
 Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, the ~700,000 students figure and `support@extensia.com.au` are illustrative. Replace them with confirmed figures before launch.
 
-## Open to-dos (as of 2026-10-11)
+## Open to-dos (as of 2026-10-12)
 
-- [ ] Decide public vs private repo (currently public)
+- [x] Decide public vs private repo (stays public)
 - [x] Connect Vercel to the repo
-- [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel (not yet confirmed)
+- [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel (waiting on the final domain)
 - [x] Claude GitHub Action for `@claude` mentions (PR #1)
 - [x] Choose the waitlist destination (Supabase via the Vercel integration)
-- [x] Run the waitlist migration in Supabase (project region: Sydney)
-- [x] Draft privacy page (`/privacy`, pending legal review)
-- [ ] Terms page
-- [ ] Legal review of footer disclaimers and Banking Circle name usage
-- [ ] Replace placeholder pricing, rates and dates
-- [ ] Branch protection on `main` requiring CI
-- [ ] Move plans from OneNote into `docs/` and tasks into GitHub Issues / Projects
+- [x] Run the waitlist and partner enquiries migrations in Supabase (project region: Sydney)
+- [x] Privacy page (`/privacy`, 24-month waitlist retention)
+- [x] Legal review of the privacy page, footer disclaimers and Banking Circle name usage
+- [ ] Terms page (not now)
+- [x] Move plans from OneNote into `docs/` and tasks into GitHub Issues / Projects

@@ -72,7 +72,7 @@ export function PartnerForm() {
         <button className="btn btn-accent" type="submit" disabled={sending} style={{ justifyContent: "center" }}>
           {sending ? "Sending…" : "Send enquiry"}
         </button>
-        <p className="note">We&apos;ll only use these details to reply to your enquiry. Read our <Link href="/privacy">draft privacy policy</Link>.</p>
+        <p className="note">We&apos;ll only use these details to reply to your enquiry. Read our <Link href="/privacy">privacy policy</Link>.</p>
       </form>
     </div>
   );
