@@ -40,7 +40,6 @@ export function Header() {
         </Link>
         <nav className="nav-links" aria-label="Main">{links}</nav>
         <div className="nav-cta">
-          <Link className="btn btn-ghost btn-sm" href="/help">Log in</Link>
           <Link className="btn btn-primary btn-sm" href="/join">Join waitlist</Link>
           <button
             className="menu-btn"
