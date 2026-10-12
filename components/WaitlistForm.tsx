@@ -103,7 +103,7 @@ export function WaitlistForm({ initialWho = "student" }: { initialWho?: Who }) {
         <button className="btn btn-accent" type="submit" disabled={sending} style={{ justifyContent: "center" }}>
           {sending ? "Joining…" : "Join the waitlist"}
         </button>
-        <p className="note">We&apos;ll only use your details to contact you about Extensia. You can unsubscribe at any time. Read our <Link href="/privacy">draft privacy policy</Link>.</p>
+        <p className="note">We&apos;ll only use your details to contact you about Extensia. You can unsubscribe at any time. Read our <Link href="/privacy">privacy policy</Link>.</p>
       </form>
     </div>
   );

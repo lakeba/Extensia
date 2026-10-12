@@ -59,7 +59,7 @@ Prices, fees, calculator rates, the 90-day pre-arrival window, roadmap dates, th
 - [x] Claude GitHub Action for `@claude` mentions (PR #1)
 - [x] Choose the waitlist destination (Supabase via the Vercel integration)
 - [x] Run the waitlist and partner enquiries migrations in Supabase (project region: Sydney)
-- [x] Draft privacy page (`/privacy`)
+- [x] Privacy page (`/privacy`, 24-month waitlist retention)
 - [x] Legal review of the privacy page, footer disclaimers and Banking Circle name usage
 - [ ] Terms page (not now)
 - [x] Move plans from OneNote into `docs/` and tasks into GitHub Issues / Projects

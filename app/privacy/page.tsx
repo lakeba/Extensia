@@ -3,8 +3,8 @@ import Link from "next/link";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy policy (draft)",
-  description: "How Extensia handles the details you give us when you join the waitlist. Draft pending legal review.",
+  title: "Privacy policy",
+  description: "How Extensia handles the details you give us when you join the waitlist.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -17,7 +17,6 @@ export default function Privacy() {
           <h1 className="t-1">Privacy policy for the waitlist.</h1>
           <p className="lede">This explains what we do with the details you give us when you join the Extensia waitlist. It covers the waitlist only. We&apos;ll publish a full policy before we offer products.</p>
         </div>
-        <p className="form-error" role="note"><strong>Draft, pending legal review.</strong> This page has not been reviewed by a lawyer and may change. Retention periods and other details are placeholders until confirmed.</p>
         <div className="prose">
           <h2 className="t-3">What we collect</h2>
           <p>When you submit the waitlist form we collect:</p>
@@ -39,7 +38,7 @@ export default function Privacy() {
           <p>If you use the form on our <Link href="/partners">partners page</Link>, we collect your name, organisation, work email, type of organisation and your message. We use them only to reply to your enquiry. They&apos;re stored in the same Sydney-hosted database as waitlist details.</p>
 
           <h2 className="t-3">How long we keep it</h2>
-          <p>[Placeholder] We plan to keep waitlist details until you&apos;re invited to open an account, you ask us to delete them, or 24 months after you join, whichever comes first.</p>
+          <p>We keep waitlist details until you&apos;re invited to open an account, you ask us to delete them, or 24 months after you join, whichever comes first.</p>
 
           <h2 className="t-3">Asking for deletion, access or correction</h2>
           <p>Email <a href={`mailto:${site.email}`}>{site.email}</a> from the address you signed up with and ask us to delete, correct or give you a copy of your details. You can also use that address to unsubscribe from emails at any time.</p>
@@ -47,7 +46,7 @@ export default function Privacy() {
           <h2 className="t-3">Australian Privacy Principles</h2>
           <p>We handle personal information in line with the Privacy Act 1988 (Cth) and the Australian Privacy Principles. If you&apos;re unhappy with how we&apos;ve handled your information, contact us first. You can also complain to the Office of the Australian Information Commissioner at <a href="https://www.oaic.gov.au" rel="noopener noreferrer">oaic.gov.au</a>.</p>
 
-          <p className="note">Back to the <Link href="/join">waitlist</Link>. Draft last updated 11 October 2026.</p>
+          <p className="note">Back to the <Link href="/join">waitlist</Link>. Last updated 12 October 2026.</p>
         </div>
       </div>
     </section>

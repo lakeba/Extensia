@@ -25,7 +25,7 @@ Requires Node.js 20.9 or later.
 | `/help`      | `app/help/page.tsx`        |
 | `/join`      | `app/join/page.tsx` (`?as=student|arrival|smsf` preselects the form) |
 | `/partners`  | `app/partners/page.tsx`    |
-| `/privacy`   | `app/privacy/page.tsx` (draft) |
+| `/privacy`   | `app/privacy/page.tsx`    |
 
 Content that changes often lives in `lib/`: plans and the comparison table (`plans.ts`), FAQ (`faq.ts`), calculator rates and fee rules (`rates.ts`), site name, URL and nav (`site.ts`), waitlist form options (`waitlist.ts`), partner cards (`partners.ts`, logos in `public/partners/`).
 
