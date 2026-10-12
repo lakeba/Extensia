@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { EMAIL_RE, type WaitlistEntry, type Who, arrivals, countries } from "@/lib/waitlist";
 
 const WHO: Who[] = ["student", "arrival", "smsf"];
@@ -39,6 +39,7 @@ export async function POST(req: Request) {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SECRET_KEY;
   if (!url || !key) {
     console.info("[waitlist] Supabase not configured; sign-up not stored", { who: entry.who });
+    notify(entry, new Date().toISOString());
     return NextResponse.json({ ok: true, stored: false });
   }
 
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
         "Content-Type": "application/json",
         apikey: key,
         Authorization: `Bearer ${key}`,
-        Prefer: "resolution=ignore-duplicates,return=minimal",
+        Prefer: "resolution=ignore-duplicates,return=representation",
       },
       body: JSON.stringify({
         who: entry.who,
@@ -65,10 +66,45 @@ export async function POST(req: Request) {
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) throw new Error(`Supabase responded ${res.status}: ${await res.text()}`);
+    // A duplicate email returns no rows, so only new sign-ups are sent on.
+    const [row] = (await res.json()) as { created_at: string }[];
+    if (row) notify(entry, row.created_at);
   } catch (err) {
     console.error("[waitlist] insert failed", err);
     return NextResponse.json({ error: "We couldn't add you to the list. Please try again in a minute." }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true, stored: true });
+}
+
+// Sends a new sign-up to the Power Automate flow in WAITLIST_WEBHOOK_URL, after the response
+// is sent so the form isn't slowed down. The URL carries a signature: keep it in env vars only.
+function notify(entry: WaitlistEntry, createdAt: string) {
+  const hook = process.env.WAITLIST_WEBHOOK_URL;
+  if (!hook) return;
+  after(async () => {
+    try {
+      const res = await fetch(hook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "INSERT",
+          record: {
+            created_at: createdAt,
+            who: entry.who,
+            email: entry.email,
+            first_name: entry.firstName,
+            last_name: entry.lastName,
+            moving_from: entry.movingFrom ?? null,
+            arriving: entry.arriving ?? null,
+            fund_name: entry.fundName || null,
+          },
+        }),
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`Webhook responded ${res.status}: ${await res.text()}`);
+    } catch (err) {
+      console.error("[waitlist] webhook failed", err);
+    }
+  });
 }
