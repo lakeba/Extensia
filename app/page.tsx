@@ -1,200 +1,194 @@
 import Link from "next/link";
-import { Balance, Float, Phone, Tx } from "@/components/Phone";
 import { CardVisual } from "@/components/CardVisual";
 import { Converter } from "@/components/Converter";
-import { CtaBand, Feature, Step, Ticks } from "@/components/Bits";
+import { plans } from "@/lib/plans";
 
-const marquee = [
-  <><b>AUD</b> account with BSB</>,
-  <><b>PayID</b> &amp; instant transfers</>,
-  <><b>30+</b> currencies</>,
-  <><b>Apple Pay</b> &amp; Google Pay</>,
-  <>Open from <b>overseas</b></>,
-  <><b>SMSF</b> trustee accounts</>,
-  <><b>Two-trustee</b> approvals</>,
+const facts: [string, string][] = [
+  ["BSB", "Your own AUD account number"],
+  ["30+", "Currencies to hold and send"],
+  ["90 days", "Open before you arrive"],
+  ["1–6", "Members per SMSF, every trustee in the app"],
 ];
 
-const corridors = ["🇮🇳 India", "🇨🇳 China", "🇳🇵 Nepal", "🇵🇭 Philippines", "🇻🇳 Vietnam", "🇵🇰 Pakistan", "🇨🇴 Colombia", "🇧🇷 Brazil", "🇬🇧 UK"];
+const price = (v: number) => (v === 0 ? "A$0" : `A$${v % 1 ? v.toFixed(2) : v}`);
+
+// The five stars of the Southern Cross, as a quiet detail in the hero sky.
+const crux = [
+  { x: 90, y: 9, r: 3.2 },
+  { x: 95, y: 21, r: 2.6 },
+  { x: 87.5, y: 19, r: 2.4 },
+  { x: 92.5, y: 33, r: 3.4 },
+  { x: 93.6, y: 24.5, r: 1.6 },
+];
 
 export default function Home() {
   return (
     <>
-      <section className="hero">
-        <div className="wrap hero-grid">
-          <div className="hero-copy">
-            <span className="chip"><b>Waitlist</b> Launching in Australia · 2027</span>
-            <h1 className="t-hero">Your Australian money, <span className="accent">ready before you land.</span></h1>
-            <p className="lede">An AUD account with its own BSB, a card for your phone, and 30+ currencies in one app. Made for international students, new arrivals and SMSF trustees.</p>
+      <section className="r-hero">
+        <div className="r-sky" aria-hidden="true">
+          {crux.map((s, i) => <span key={i} className="r-star" style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.r * 2, height: s.r * 2 }} />)}
+        </div>
+        <div className="wrap r-hero-in">
+          <div className="r-hero-copy">
+            <span className="r-chip">Launching in Australia · 2027</span>
+            <h1 className="r-title">Money, ready before you land.</h1>
+            <p className="r-lede">An AUD account with its own BSB, a card for your phone and 30+ currencies in one app. For international students, new arrivals and SMSF trustees.</p>
             <div className="hero-actions">
-              <Link className="btn btn-accent" href="/join">Join the waitlist</Link>
-              <Link className="btn btn-ghost" href="/pricing">Compare plans</Link>
-            </div>
-            <div className="store-row" aria-label="App availability">
-              <div className="store">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9s-2-.9-3.3-.9C6 7 4.4 8 3.5 9.6c-1.8 3.1-.5 7.8 1.3 10.3.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.7-4.5zM14 5.4c.7-.8 1.2-2 1-3.1-1 0-2.2.7-3 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.3-.6 3-1.4z" /></svg>
-                <span>Coming soon<strong>iPhone</strong></span>
-              </div>
-              <div className="store">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 2.3 13.4 12l-9.8 9.7c-.4-.2-.6-.6-.6-1.1V3.4c0-.5.2-.9.6-1.1zm11 10.9 2.5 2.5-11 6.3 8.5-8.8zm3.7-3.6 2.7 1.5c.8.5.8 1.3 0 1.8l-2.7 1.5-2.7-2.7 2.7-2.1zM6.1 2l11 6.3-2.5 2.5L6.1 2z" /></svg>
-                <span>Coming soon<strong>Android</strong></span>
-              </div>
+              <Link className="btn btn-white" href="/join">Join the waitlist</Link>
+              <Link className="btn btn-glass" href="/pricing">Compare plans</Link>
             </div>
           </div>
-          <div className="stage" aria-label="Preview of the Extensia app">
-            <div className="blob" />
-            <Phone initials="PR" label="Personal · AUD" badge="🔔">
-              <Balance label="Total balance" amount="A$4,280.50" pill="BSB •••-•08 · Acc ••••4417" mono />
-              <div className="quick"><div><i>＋</i>Add</div><div><i>⇄</i>Convert</div><div><i>↗</i>Send</div><div><i>⋯</i>More</div></div>
-              <div className="txs">
-                <h5>Today</h5>
-                <Tx icon="↓" tone="g" name="From Mum · INR" sub="Converted at 55.21" value="+A$1,200.00" incoming />
-                <Tx icon="🚆" tone="a" name="Train fare" sub="Tap on · Central" value="−A$4.20" />
-                <Tx icon="🛒" tone="c" name="Groceries" sub="Card · Apple Pay" value="−A$62.35" />
-                <Tx icon="⌂" tone="a" name="Rent split" sub="PayID · 3 flatmates" value="−A$310.00" />
-              </div>
-            </Phone>
-            <Float pos="f1" tone="gum" mark="✓" title="Account details ready" sub="Before your flight" />
-            <Float pos="f2" tone="coral" mark="₹" title="₹55,210 sent to Pune" sub="Arrived in 14 seconds" />
+          <div className="r-device" aria-label="Preview of the Extensia app">
+            <div className="r-glass">
+              <span className="r-glass-label">Personal · AUD</span>
+              <span className="r-glass-amt">A$4,280</span>
+              <span className="r-glass-pill">Accounts</span>
+            </div>
+            <div className="r-notif r-n1">
+              <span className="r-ic r-ic-g">↓</span>
+              <span><strong>From Mum · INR</strong><small>Today, 9:41</small></span>
+              <span className="r-amt-in">+A$1,200</span>
+            </div>
+            <div className="r-notif r-n2">
+              <span className="r-ic r-ic-a">✓</span>
+              <span><strong>Account details ready</strong><small>Before your flight</small></span>
+            </div>
           </div>
         </div>
       </section>
 
-      <div className="marquee" aria-hidden="true">
-        <div className="marquee-in">
-          {[...marquee, ...marquee].map((m, i) => <span key={i}>{m}</span>)}
-        </div>
-      </div>
-
-      <section>
+      <section className="r-facts">
         <div className="wrap">
-          <div className="sec-head">
-            <span className="eyebrow">Built for three kinds of people</span>
-            <h2 className="t-1">One app. Three very different first days.</h2>
-          </div>
-          <div className="aud">
-            <Link className="tile t-acc" href="/students">
-              <span className="eyebrow">International students</span>
-              <h3>Pay tuition, get paid, stay within your work hours.</h3>
-              <p>Open with your passport and CoE. Receive money from home at the real exchange rate.</p>
-              <div className="go"><div className="stat">48h<small>fortnightly work limit, tracked for you</small></div><span className="arrow">→</span></div>
-            </Link>
-            <Link className="tile t-cor" href="/arrivals">
-              <span className="eyebrow">New arrivals &amp; migrants</span>
-              <h3>Land with an account that already works.</h3>
-              <p>Get your AUD details before you fly, then send money home in 30+ currencies.</p>
-              <div className="go"><div className="stat">90<small>days before arrival you can apply</small></div><span className="arrow">→</span></div>
-            </Link>
-            <Link className="tile t-ink" href="/smsf">
-              <span className="eyebrow">SMSF trustees</span>
-              <h3>A transaction account your fund and your accountant will like.</h3>
-              <p>Two-trustee approvals, rollovers via SuperStream and clean data for your administrator.</p>
-              <div className="go"><div className="stat">1–6<small>members per fund, every trustee in the app</small></div><span className="arrow">→</span></div>
-            </Link>
+          <p className="r-facts-head">One app for your first day in Australia, and every day after.</p>
+          <div className="r-facts-grid">
+            {facts.map(([big, small]) => (
+              <div key={big}><b>{big}</b><span>{small}</span></div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="no-top">
-        <div className="wrap">
-          <div className="sec-head">
-            <span className="eyebrow">Everyday money</span>
-            <h2 className="t-1">Everything a first account should do.</h2>
+      <section className="r-panel r-p-students">
+        <div className="wrap r-panel-in">
+          <div className="r-panel-copy">
+            <span className="eyebrow">International students</span>
+            <h2 className="r-h2">Tuition, rent and work hours. Sorted.</h2>
+            <p>Open with your passport and Confirmation of Enrolment. Get money from family at the real exchange rate and keep within your 48-hour fortnight.</p>
+            <Link className="btn btn-white" href="/students">For students</Link>
           </div>
-          <div className="feat">
-            <div className="fcard wide">
-              <div style={{ display: "grid", gap: 12 }}>
-                <div className="ico ico-acc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="3" y="5" width="18" height="14" rx="3" /><path d="M3 10h18M7 15h4" /></svg></div>
-                <h3>Your own BSB and account number</h3>
-                <p>Give them to your employer, your landlord or your uni. Salary, refunds and PayID payments land in seconds through Australia&apos;s real-time payment network.</p>
-              </div>
-              <CardVisual color="cobalt" tier="Debit" pan="4417" label="Priya R." style={{ justifySelf: "center" }} />
+          <div className="r-ui">
+            <div className="r-card-ui">
+              <div className="r-ui-row"><span>Work hours this fortnight</span><span className="r-ok">On track</span></div>
+              <div className="r-ui-big">31.5<small> / 48 h</small></div>
+              <div className="r-meter"><div style={{ width: "66%" }} /></div>
             </div>
-            <Feature tone="cor" title="Hold 30+ currencies" icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18" /></svg>}>
-              Keep rupees, yuan, pesos or pounds alongside your dollars. Convert when the rate suits you.
-            </Feature>
-            <Feature tone="gum" title="Send money abroad" icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 3v18M5 10l7-7 7 7" /></svg>}>
-              Transfers to 60+ countries at the interbank rate, with the fee shown before you press send.
-            </Feature>
-            <Feature tone="acc" title="Pay with your phone" icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><rect x="6" y="2" width="12" height="20" rx="3" /><path d="M11 18h2" /></svg>}>
-              A virtual card the moment you&apos;re approved. Add it to Apple Pay or Google Pay and tap anywhere.
-            </Feature>
-            <Feature tone="sun" title="Budgets that make sense" icon={<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M4 19h16M7 16V9M12 16V5M17 16v-4" /></svg>}>
-              Rent, groceries and transport sorted automatically, with a weekly spend target you set.
-            </Feature>
+            <div className="r-card-ui r-tx">
+              <span className="r-ic r-ic-a">🎓</span>
+              <span><strong>Tuition · Semester 1</strong><small>Paid in AUD</small></span>
+              <span className="num">−A$9,850</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="ink">
-        <div className="wrap split">
-          <div>
+      <section className="r-panel r-p-arrivals">
+        <div className="wrap r-panel-in r-flip">
+          <div className="r-panel-copy">
+            <span className="eyebrow">New arrivals and migrants</span>
+            <h2 className="r-h2">Land with an account that already works.</h2>
+            <p>Get your AUD account details up to 90 days before you fly. Give them to your employer and landlord, then send money home in 30+ currencies.</p>
+            <Link className="btn btn-white" href="/arrivals">For new arrivals</Link>
+          </div>
+          <div className="r-ui">
+            <div className="r-card-ui">
+              <div className="r-ui-row"><span>Account details</span><span className="r-ok">Ready</span></div>
+              <div className="r-detail"><span>BSB</span><b className="num">•••-•08</b></div>
+              <div className="r-detail"><span>Account</span><b className="num">•••• 4417</b></div>
+              <div className="r-detail"><span>PayID</span><b>priya@email.com</b></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="r-panel r-p-smsf">
+        <div className="wrap r-panel-in">
+          <div className="r-panel-copy">
+            <span className="eyebrow">SMSF trustees</span>
+            <h2 className="r-h2">Run your fund with every trustee in the loop.</h2>
+            <p>An account in your fund&apos;s name, two-trustee approvals for large payments, rollovers via SuperStream and view-only access for your accountant.</p>
+            <Link className="btn btn-white" href="/smsf">For SMSFs</Link>
+          </div>
+          <div className="r-ui">
+            <div className="r-card-ui">
+              <div className="r-ui-row"><span>Payment approval</span><span className="r-wait">1 of 2</span></div>
+              <div className="r-ui-big">A$25,000</div>
+              <div className="r-signer"><span className="r-av">AO</span><span>Adaeze Okafor<small>Approved 9:41am</small></span><span className="r-ok">Done</span></div>
+              <div className="r-signer"><span className="r-av">CO</span><span>Chidi Okafor<small>Notified</small></span><span className="r-wait">Waiting</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="r-world">
+        <div className="wrap r-world-in">
+          <div className="r-center">
             <span className="eyebrow">Money across borders</span>
-            <h2 className="t-1" style={{ marginTop: 16 }}>Family sends dollars. You get dollars, not surprises.</h2>
-            <p className="lede mt-m">Receive from home or send money back at the interbank rate. Standard plans include A$1,500 of fee-free conversion each month, then a flat 0.5%.</p>
-            <Ticks items={["Fee and arrival time shown before you confirm", "Rate alerts when your currency hits a target", "Recurring transfers for rent, tuition or family support"]} />
-            <div className="corridors" aria-label="Popular corridors">
-              {corridors.map((c) => <span key={c}>{c}</span>)}
-            </div>
+            <h2 className="r-h2">Send money home at the real rate.</h2>
+            <p className="r-sub">See the fee and arrival time before you press send. Standard plans include A$1,500 of fee-free conversion each month.</p>
           </div>
-          <Converter />
+          <div className="r-conv"><Converter /></div>
         </div>
+        <div className="r-horizon" aria-hidden="true" />
       </section>
 
-      <section>
-        <div className="wrap">
-          <div className="sec-head">
-            <span className="eyebrow">How it works</span>
-            <h2 className="t-1">From your home country to your first tap in Sydney.</h2>
-          </div>
-          <div className="steps">
-            <Step n={1} title="Apply from anywhere">Use your passport and your visa grant notice. Apply up to 90 days before you fly.</Step>
-            <Step n={2} title="Verify in minutes">A short video selfie confirms it&apos;s you. We check your visa with the government&apos;s VEVO service.</Step>
-            <Step n={3} title="Get your details">Your BSB, account number and virtual card appear in the app, ready for your first payment.</Step>
-            <Step n={4} title="Land and tap">Your physical card is posted to your Australian address. Until then, pay with your phone.</Step>
-          </div>
-        </div>
-      </section>
-
-      <section className="ink">
-        <div className="wrap split">
+      <section className="r-cards">
+        <div className="wrap r-center">
+          <h2 className="r-h2">A card for every chapter.</h2>
+          <p className="r-sub">A virtual card the moment you&apos;re approved. Add it to Apple Pay or Google Pay and tap anywhere. Freeze it in one tap.</p>
           <div className="cards-fan" aria-hidden="true">
             <CardVisual color="coral" tier="Plus" pan="2290" label="Debit" />
             <CardVisual color="cobalt" tier="Standard" pan="4417" label="Debit" />
             <CardVisual color="night" tier="SMSF" pan="0631" label="Fund" />
           </div>
-          <div>
-            <span className="eyebrow">Cards</span>
-            <h2 className="t-1" style={{ marginTop: 16 }}>A card that works the day you land.</h2>
-            <Ticks items={["Freeze and unfreeze from the app in one tap", "Single-use virtual cards for online shopping", "Spending limits per card, per day", "Instant notification for every payment"]} />
-            <div className="mt-m"><Link className="btn btn-light" href="/pricing">See card options</Link></div>
+        </div>
+      </section>
+
+      <section className="r-plans">
+        <div className="wrap">
+          <h2 className="r-h2 r-center">Choose your plan.</h2>
+          <div className="r-plan-grid">
+            {plans.map((p) => (
+              <Link key={p.id} href="/pricing" className="r-plan">
+                <h3>{p.name}</h3>
+                <b>{price(p.monthly)}<small>/month</small></b>
+                <p>{p.for}</p>
+                <span className="r-arrow" aria-hidden="true">→</span>
+              </Link>
+            ))}
+          </div>
+          <p className="note r-center mt-m">Proposed pricing. Final fees will be confirmed before launch.</p>
+        </div>
+      </section>
+
+      <section className="r-trust">
+        <div className="wrap">
+          <div className="r-center">
+            <h2 className="r-h2">Built on regulated rails. Honest about where we are.</h2>
+            <p className="r-sub">Accounts, payments and foreign exchange will run on infrastructure from Banking Circle. We&apos;re applying for the licences we need, and we&apos;ll publish full details before launch. Extensia is not a bank.</p>
+          </div>
+          <div className="r-trust-grid">
+            <div><h3>Biometric login</h3><p>Face or fingerprint to open the app, plus device binding.</p></div>
+            <div><h3>Fraud monitoring</h3><p>3-D Secure on online payments and 24/7 card monitoring.</p></div>
+            <div><h3>Kept separate</h3><p>Customer money held separately from company money.</p></div>
           </div>
         </div>
       </section>
 
-      <section>
-        <div className="wrap">
-          <div className="sec-head">
-            <span className="eyebrow">Security and infrastructure</span>
-            <h2 className="t-1">Built on regulated rails. Honest about where we are.</h2>
-          </div>
-          <div className="trust">
-            <div className="trust-main">
-              <h3 className="t-3">Powered by Banking Circle infrastructure</h3>
-              <p className="lede" style={{ fontSize: 18 }}>Extensia accounts, payments and foreign exchange will run on infrastructure provided by Banking Circle, a European payments and account provider that serves fintechs in many markets. You get modern, fast payments. We focus on the app and the people using it.</p>
-              <Ticks style={{ marginTop: 0 }} items={["Biometric login and device binding", "3-D Secure on every online card payment", "24/7 card fraud monitoring", "Customer money kept separate from company money"]} />
-            </div>
-            <div className="trust-side">
-              <div className="fcard"><span className="status prog">In progress</span><h3>Australian licensing</h3><p>We&apos;re applying for the licences needed to offer our services in Australia. Full details will be published before launch.</p></div>
-              <div className="fcard"><span className="status plan">Long-term goal</span><h3>Banking licence</h3><p>We intend to apply to APRA to become an authorised deposit-taking institution. Until then, Extensia is not a bank.</p></div>
-              <div className="fcard"><span className="status live">Open now</span><h3>Waitlist</h3><p>Join to get early access and help shape the first release.</p></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="no-top">
-        <div className="wrap">
-          <CtaBand title="Moving to Australia? Get in early." text="Waitlist members get first access and 3 months of Plus free when we launch." href="/join" label="Join the waitlist" />
+      <section className="r-final">
+        <div className="wrap r-center">
+          <h2 className="r-title-dark">Get in early.</h2>
+          <p className="r-sub">Waitlist members get first access and 3 months of Plus free when we launch.</p>
+          <Link className="btn btn-accent" href="/join">Join the waitlist</Link>
         </div>
       </section>
     </>
