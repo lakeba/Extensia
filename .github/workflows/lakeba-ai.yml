@@ -1,8 +1,9 @@
 name: Lakeba AI
 
-# Mention @lakeba-ai in an issue, issue comment, PR comment or PR review to have
-# Lakeba AI work on it. Only repository owners, org members and collaborators can
-# trigger it, because the repository is public.
+# Mention @lakeba-ai in an issue, issue comment, PR comment or PR review, or add the
+# lakeba-ai label to an issue, to have Lakeba AI work on it. Only repository owners,
+# org members and collaborators can trigger it, because the repository is public
+# (adding a label already needs triage access).
 
 on:
   issue_comment:
@@ -10,7 +11,7 @@ on:
   pull_request_review_comment:
     types: [created]
   issues:
-    types: [opened, assigned]
+    types: [opened, assigned, labeled]
   pull_request_review:
     types: [submitted]
 
@@ -24,8 +25,10 @@ jobs:
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
         (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@lakeba-ai') &&
           contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association)) ||
-        (github.event_name == 'issues' && (contains(github.event.issue.body, '@lakeba-ai') || contains(github.event.issue.title, '@lakeba-ai')) &&
-          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+        (github.event_name == 'issues' && github.event.action != 'labeled' &&
+          (contains(github.event.issue.body, '@lakeba-ai') || contains(github.event.issue.title, '@lakeba-ai')) &&
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)) ||
+        (github.event_name == 'issues' && github.event.action == 'labeled' && github.event.label.name == 'lakeba-ai')
       )
     runs-on: ubuntu-latest
     permissions:
