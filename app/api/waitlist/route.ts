@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { EMAIL_RE, type WaitlistEntry, type Who, arrivals, countries } from "@/lib/waitlist";
 
 const WHO: Who[] = ["student", "arrival", "smsf"];
+const WHO_SET = new Set<string>(WHO);
+const COUNTRIES_SET = new Set<string>(countries);
+const ARRIVALS_SET = new Set<string>(arrivals);
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
 export async function POST(req: Request) {
@@ -19,7 +22,9 @@ export async function POST(req: Request) {
   if (!EMAIL_RE.test(email)) {
     return NextResponse.json({ error: "Enter an email address like name@example.com." }, { status: 422 });
   }
-  const who = WHO.includes(body.who as Who) ? (body.who as Who) : "arrival";
+  const who = WHO_SET.has(String(body.who)) ? (body.who as Who) : "arrival";
+  const movingFrom = clean(body.movingFrom, 40);
+  const arriving = clean(body.arriving, 40);
 
   const entry: WaitlistEntry = {
     who,
@@ -29,8 +34,8 @@ export async function POST(req: Request) {
     ...(who === "smsf"
       ? { fundName: clean(body.fundName, 120) }
       : {
-          movingFrom: countries.includes(clean(body.movingFrom, 40)) ? clean(body.movingFrom, 40) : "Other",
-          arriving: arrivals.includes(clean(body.arriving, 40)) ? clean(body.arriving, 40) : undefined,
+          movingFrom: COUNTRIES_SET.has(movingFrom) ? movingFrom : "Other",
+          arriving: ARRIVALS_SET.has(arriving) ? arriving : undefined,
         }),
   };
 

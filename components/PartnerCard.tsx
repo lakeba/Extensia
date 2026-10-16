@@ -7,7 +7,13 @@ export function PartnerLogo({ id }: { id: PartnerId }) {
   const p = partner(id);
   return (
     <div className="partner-logo" style={{ background: p.logo.bg }}>
-      <Image src={p.logo.src} alt={`${p.name} logo`} width={p.logo.width} height={p.logo.height} />
+      <Image
+        src={p.logo.src}
+        alt={`${p.name} logo`}
+        width={p.logo.width}
+        height={p.logo.height}
+        sizes="(max-width: 768px) 100vw, 320px"
+      />
     </div>
   );
 }

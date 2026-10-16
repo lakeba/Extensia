@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { partnerTypes } from "@/lib/partners";
 import { EMAIL_RE } from "@/lib/waitlist";
 
+const PARTNER_TYPES_SET = new Set<string>(partnerTypes);
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
 export async function POST(req: Request) {
@@ -41,7 +42,7 @@ export async function POST(req: Request) {
         email,
         name: clean(body.name, 120),
         organisation: clean(body.organisation, 160),
-        type: partnerTypes.includes(type) ? type : "Other",
+        type: PARTNER_TYPES_SET.has(type) ? type : "Other",
         message: clean(body.message, 2000),
         source: "extensia-website",
       }),

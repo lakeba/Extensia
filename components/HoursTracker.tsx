@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import { fmt } from "@/lib/rates";
 
 const CAP = 48;
@@ -13,15 +13,18 @@ export function HoursTracker() {
   const [day, setDay] = useState(13);
   const [add, setAdd] = useState("5");
 
-  const total = hours.reduce((s, h) => s + h, 0);
-  const left = CAP - total;
-  const level = total > CAP ? "over" : total >= 40 ? "warn" : "";
-  const status =
-    total > CAP
-      ? { cls: "status over", text: `${fmt(-left, 1)} h over the limit` }
-      : total >= 40
-        ? { cls: "status prog", text: `${fmt(left, 1)} h left` }
-        : { cls: "status live", text: `On track · ${fmt(left, 1)} h left` };
+  const { total, level, status } = useMemo(() => {
+    const total = hours.reduce((s, h) => s + h, 0);
+    const left = CAP - total;
+    const level = total > CAP ? "over" : total >= 40 ? "warn" : "";
+    const status =
+      total > CAP
+        ? { cls: "status over", text: `${fmt(-left, 1)} h over the limit` }
+        : total >= 40
+          ? { cls: "status prog", text: `${fmt(left, 1)} h left` }
+          : { cls: "status live", text: `On track · ${fmt(left, 1)} h left` };
+    return { total, level, status };
+  }, [hours]);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();

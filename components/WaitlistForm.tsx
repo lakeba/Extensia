@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { EMAIL_RE, type Who, arrivals, countries } from "@/lib/waitlist";
 
@@ -9,6 +10,15 @@ const whoOptions: { id: Who; label: string }[] = [
   { id: "arrival", label: "New arrival" },
   { id: "smsf", label: "SMSF trustee" },
 ];
+
+const WHO: Who[] = ["student", "arrival", "smsf"];
+
+export function WaitlistFormWithParams() {
+  const searchParams = useSearchParams();
+  const as = searchParams.get("as");
+  const initialWho = WHO.includes(as as Who) ? (as as Who) : "student";
+  return <WaitlistForm key={initialWho} initialWho={initialWho} />;
+}
 
 export function WaitlistForm({ initialWho = "student" }: { initialWho?: Who }) {
   const [who, setWho] = useState<Who>(initialWho);

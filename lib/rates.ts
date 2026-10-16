@@ -23,5 +23,14 @@ export const FEE_RATE = 0.005;
 export const TYPICAL_MARGIN = 0.03;
 export const TYPICAL_FEE = 22;
 
-export const fmt = (n: number, dp: number) =>
-  n.toLocaleString("en-AU", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+const formatters = new Map<number, Intl.NumberFormat>();
+
+export const fmt = (n: number, dp: number) => {
+  let f = formatters.get(dp);
+  if (!f) {
+    f = new Intl.NumberFormat("en-AU", { minimumFractionDigits: dp, maximumFractionDigits: dp });
+    formatters.set(dp, f);
+  }
+  return f.format(n);
+};
+
