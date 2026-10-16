@@ -22,7 +22,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
-      { source: "/partners/:path*", headers: staticAssetHeaders },
+      // Logo files only: a bare /partners/:path* would also match the /partners page.
+      { source: "/partners/:file(.+\\.(?:png|svg|jpe?g|webp|avif))", headers: staticAssetHeaders },
       { source: "/icon.svg", headers: staticAssetHeaders },
     ];
   },
