@@ -5,21 +5,26 @@ import { FEE_RATE, FREE_ALLOWANCE, TYPICAL_FEE, TYPICAL_MARGIN, fmt, rates } fro
 
 const parse = (v: string) => parseFloat(v.replace(/[^0-9.]/g, "")) || 0;
 
+const rateDetails = rates.map((x) => ({
+  dp: x.r > 1000 ? 0 : 2,
+  rateStr: `1 AUD = ${fmt(x.r, x.r < 10 ? 3 : 2)} ${x.code}`,
+}));
+
 export function Converter() {
   const [raw, setRaw] = useState("1,000");
   const [idx, setIdx] = useState(0);
 
   const r = useMemo(() => {
     const x = rates[idx];
+    const { dp, rateStr } = rateDetails[idx];
     const a = parse(raw);
     const fee = Math.max(0, a - FREE_ALLOWANCE) * FEE_RATE;
-    const dp = x.r > 1000 ? 0 : 2;
     return {
       x,
       fee,
       us: x.symbol + fmt((a - fee) * x.r, dp),
       them: x.symbol + fmt(Math.max(0, a - TYPICAL_FEE) * x.r * (1 - TYPICAL_MARGIN), dp),
-      rate: `1 AUD = ${fmt(x.r, x.r < 10 ? 3 : 2)} ${x.code}`,
+      rate: rateStr,
     };
   }, [raw, idx]);
 

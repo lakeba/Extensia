@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { EMAIL_RE, type Who, arrivals, countries } from "@/lib/waitlist";
 
@@ -9,6 +10,15 @@ const whoOptions: { id: Who; label: string }[] = [
   { id: "arrival", label: "New arrival" },
   { id: "smsf", label: "SMSF trustee" },
 ];
+
+const WHO: Who[] = ["student", "arrival", "smsf"];
+
+export function WaitlistFormWithParams() {
+  const searchParams = useSearchParams();
+  const as = searchParams.get("as");
+  const initialWho = WHO.includes(as as Who) ? (as as Who) : "student";
+  return <WaitlistForm key={initialWho} initialWho={initialWho} />;
+}
 
 export function WaitlistForm({ initialWho = "student" }: { initialWho?: Who }) {
   const [who, setWho] = useState<Who>(initialWho);
@@ -103,7 +113,7 @@ export function WaitlistForm({ initialWho = "student" }: { initialWho?: Who }) {
         <button className="btn btn-accent" type="submit" disabled={sending} style={{ justifyContent: "center" }}>
           {sending ? "Joining…" : "Join the waitlist"}
         </button>
-        <p className="note">We&apos;ll only use your details to contact you about Extensia. You can unsubscribe at any time. Read our <Link href="/privacy">draft privacy policy</Link>.</p>
+        <p className="note">We&apos;ll only use your details to contact you about Extensia. You can unsubscribe at any time. Read our <Link href="/privacy">privacy policy</Link>.</p>
       </form>
     </div>
   );

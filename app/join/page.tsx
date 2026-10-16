@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Ticks } from "@/components/Bits";
-import { WaitlistForm } from "@/components/WaitlistForm";
-import type { Who } from "@/lib/waitlist";
+import { WaitlistForm, WaitlistFormWithParams } from "@/components/WaitlistForm";
 
 export const metadata: Metadata = {
   title: "Join the waitlist",
@@ -9,11 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/join" },
 };
 
-const WHO: Who[] = ["student", "arrival", "smsf"];
-
-export default async function Join({ searchParams }: { searchParams: Promise<{ as?: string }> }) {
-  const { as } = await searchParams;
-  const initialWho = WHO.includes(as as Who) ? (as as Who) : "student";
+export default function Join() {
   return (
     <section className="p-hero">
       <div className="wrap join">
@@ -23,7 +19,9 @@ export default async function Join({ searchParams }: { searchParams: Promise<{ a
           <p className="lede">Tell us a little about yourself. We&apos;ll invite people arriving soonest first, and keep you updated on our launch.</p>
           <Ticks style={{ marginTop: 0 }} items={["3 months of Plus free at launch", "Students: 12 months of Plus with a valid CoE", "SMSF founding members: first 6 months free"]} />
         </div>
-        <WaitlistForm key={initialWho} initialWho={initialWho} />
+        <Suspense fallback={<WaitlistForm initialWho="student" />}>
+          <WaitlistFormWithParams />
+        </Suspense>
       </div>
     </section>
   );

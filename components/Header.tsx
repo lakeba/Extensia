@@ -14,11 +14,30 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    const onResize = () => window.innerWidth > 1100 && setOpen(false);
-    onScroll();
+    let ticking = false;
+    let prevScrolled = window.scrollY > 8;
+    setScrolled(prevScrolled);
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 8;
+          if (isScrolled !== prevScrolled) {
+            prevScrolled = isScrolled;
+            setScrolled(isScrolled);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    const onResize = () => {
+      if (window.innerWidth > 1100) setOpen(false);
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
